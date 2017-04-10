@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- WARNING: Eclipse auto-generated file.
+              Any modifications will be overwritten.
+              To include a user specific buildfile here, simply create one in the same
+              directory with the processing instruction <?eclipse.ant.import?>
+              as the first entry and export the buildfile again. --><project basedir="." default="build" name="MultikeyRpc">
+    <property environment="env"/>
+    <property name="ECLIPSE_HOME" value="../../Downloads/eclipse-jee-mars-1-win32/eclipse/"/>
+    <property name="debuglevel" value="source,lines,vars"/>
+    <property name="target" value="1.6"/>
+    <property name="source" value="1.6"/>
+    <path id="MultikeyRpc.classpath">
+        <pathelement location="bin"/>
+        <pathelement location="../../../../Softwares/log4j-1.2.17/apache-log4j-1.2.17/log4j-1.2.17.jar"/>
+    </path>
+    <target name="init">
+        <mkdir dir="bin"/>
+        <copy includeemptydirs="false" todir="bin">
+            <fileset dir="src">
+                <exclude name="**/*.launch"/>
+                <exclude name="**/*.java"/>
+            </fileset>
+        </copy>
+    </target>
+    <target name="clean">
+        <delete dir="bin"/>
+    </target>
+    <target depends="clean" name="cleanall"/>
+    <target depends="build-subprojects,build-project" name="build"/>
+    <target name="build-subprojects"/>
+    <target depends="init" name="build-project">
+        <echo message="${ant.project.name}: ${ant.file}"/>
+        <javac debug="true" debuglevel="${debuglevel}" destdir="bin" includeantruntime="false" source="${source}" target="${target}">
+            <src path="src"/>
+            <classpath refid="MultikeyRpc.classpath"/>
+        </javac>
+    </target>
+    <target description="Build all projects which reference this project. Useful to propagate changes." name="build-refprojects"/>
+    <target description="copy Eclipse compiler jars to ant lib directory" name="init-eclipse-compiler">
+        <copy todir="${ant.library.dir}">
+            <fileset dir="${ECLIPSE_HOME}/plugins" includes="org.eclipse.jdt.core_*.jar"/>
+        </copy>
+        <unzip dest="${ant.library.dir}">
+            <patternset includes="jdtCompilerAdapter.jar"/>
+            <fileset dir="${ECLIPSE_HOME}/plugins" includes="org.eclipse.jdt.core_*.jar"/>
+        </unzip>
+    </target>
+    <target description="compile project with Eclipse compiler" name="build-eclipse-compiler">
+        <property name="build.compiler" value="org.eclipse.jdt.core.JDTCompilerAdapter"/>
+        <antcall target="build"/>
+    </target>
+    <target name="RmiRegister (5)">
+        <java classname="allclasrpc.RmiRegister" failonerror="true" fork="yes">
+            <arg line="7777"/>
+            <classpath refid="MultikeyRpc.classpath"/>
+        </java>
+    </target>
+    <target name="RmiRegister (6)">
+        <java classname="allclasrpc.RmiRegister" failonerror="true" fork="yes">
+            <arg line="4444"/>
+            <classpath refid="MultikeyRpc.classpath"/>
+        </java>
+    </target>
+    <target name="Client1 (2)">
+        <java classname="allclasrpc.Client1" failonerror="true" fork="yes">
+            <arg line="localhost 7777"/>
+            <classpath refid="MultikeyRpc.classpath"/>
+        </java>
+    </target>
+    <target name="Client1">
+        <java classname="allclasrpc.Client1" failonerror="true" fork="yes">
+            <arg line="localhost 4444"/>
+            <classpath refid="MultikeyRpc.classpath"/>
+        </java>
+    </target>
+</project>
